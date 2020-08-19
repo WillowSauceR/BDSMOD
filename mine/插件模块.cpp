@@ -31,17 +31,17 @@ THook(char, "?solidify@LiquidBlock@@IEBA_NAEAVBlockSource@@AEBVBlockPos@@1@Z",
 		BlockLegacy* blockleg = SymCall("?getLegacyBlock@Block@@QEBAAEBVBlockLegacy@@XZ",
 			BlockLegacy*, Block*)(block);
 		string blockname = *(string*)((__int64)blockleg + 112);
-		if (blockname == "minecraft:cobblestone" || "minecraft:basalt") {
+		if (blockname == "minecraft:cobblestone" ) {
 			int randVal = rand() % num;
 			for (int i = 0; i < len; i++)
 			{
 				if (randVal <= weight[i])
 				{
-					if (blockname == "minecraft:basalt" && name[i] == "Cobblestone") {
+					/*if (blockname == "minecraft:basalt" && name[i] == "Cobblestone") {
 						SymCall("?setBlock@BlockSource@@QEAA_NAEBVBlockPos@@AEBVBlock@@HPEBUActorBlockSyncMessage@@@Z",
 							bool, BlockSource*, BlockPos*, Block&, int, __int64*)(bs, bp1, selectblock("Basalt"), 3, 0i64);
 						break;
-					}
+					}*/
 					SymCall("?setBlock@BlockSource@@QEAA_NAEBVBlockPos@@AEBVBlock@@HPEBUActorBlockSyncMessage@@@Z",
 						bool, BlockSource*, BlockPos*, Block&, int, __int64*)(bs, bp1, selectblock(name[i]), 3, 0i64);
 					break;
