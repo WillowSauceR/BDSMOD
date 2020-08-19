@@ -4,5 +4,5 @@
 # mine
 此插件可以在水和岩浆生成圆石的时候刷出自定义的方块
 # Folder creator
-此插件可以利用logout创建文件夹
+此插件可以利用BDSjsrunner的logout函数创建文件夹
 
