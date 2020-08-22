@@ -33,15 +33,11 @@ THook(char, "?solidify@LiquidBlock@@IEBA_NAEAVBlockSource@@AEBVBlockPos@@1@Z",
 		string blockname = *(string*)((__int64)blockleg + 112);
 		if (blockname == "minecraft:cobblestone" ) {
 			int randVal = rand() % num;
+			cout << randVal << endl;
 			for (int i = 0; i < len; i++)
 			{
-				if (randVal <= weight[i])
+				if (randVal < weight[i])
 				{
-					/*if (blockname == "minecraft:basalt" && name[i] == "Cobblestone") {
-						SymCall("?setBlock@BlockSource@@QEAA_NAEBVBlockPos@@AEBVBlock@@HPEBUActorBlockSyncMessage@@@Z",
-							bool, BlockSource*, BlockPos*, Block&, int, __int64*)(bs, bp1, selectblock("Basalt"), 3, 0i64);
-						break;
-					}*/
 					SymCall("?setBlock@BlockSource@@QEAA_NAEBVBlockPos@@AEBVBlock@@HPEBUActorBlockSyncMessage@@@Z",
 						bool, BlockSource*, BlockPos*, Block&, int, __int64*)(bs, bp1, selectblock(name[i]), 3, 0i64);
 					break;
@@ -61,15 +57,16 @@ void init() {
 	len = je["block"].GetArraySize();
 	if (len != je["weight"].GetArraySize())
 		cout << u8"[mine]数组长度不一致!" << endl;
-	for (int i = 0; i <= len; i++) {
+	for (int i = 0; i < len; i++) {
 		je["block"].Get(i, name[i]);
 	}
-	for (int i = 0; i <= len; i++) {
+	for (int i = 0; i < len; i++) {
 		je["weight"].Get(i, weight[i]);
 		num += weight[i];
 	}
 	for (int i = 0; i < len; i++) {
 		cout << "[mine]" << name[i] << u8"生成概率为" << (double)weight[i] * 100 / (double)num << '%' << endl;
 	}
+	cout << je.ToFormattedString() << endl;
 	cout << u8"[插件]刷矿机加载完成~" << endl;
 }
