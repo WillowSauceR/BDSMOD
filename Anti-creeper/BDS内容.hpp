@@ -9,14 +9,15 @@ struct Actor {
 		return SymCall("?getNameTag@Actor@@UEBAAEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@XZ",
 			std::string*,Actor*)(this);
 	}
-	__int64 gettypeid() {
+	int gettypeid() {
 		return SymCall("?getEntityTypeId@Actor@@UEBA?AW4ActorType@@XZ",
-			__int64, Actor*)(this);
+			int, Actor*)(this);
 	}
 };
-struct Mob : Actor {
+struct Block {
 
 };
-struct Player : Mob {
+struct BlockSource {
 
 };
+struct BlockLegacy {};

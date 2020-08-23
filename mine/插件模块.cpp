@@ -8,7 +8,7 @@
 using namespace std;
 
 //ÉùÃ÷
-neb::CJsonObject block;
+//neb::CJsonObject block;
 int weight[16];
 string name[16];
 int num = 0;
@@ -19,7 +19,6 @@ Block& selectblock(string name) {
 	name = "?m" + name + "@VanillaBlocks@@3PEBVBlock@@EB";
 	char* sym = new char[name.length() + 1];
 	strcpy_s(sym, name.length() + 1, name.c_str());
-	//cout<<sym<<endl;
 	return **(Block**)SYM(sym);
 }
 THook(char, "?solidify@LiquidBlock@@IEBA_NAEAVBlockSource@@AEBVBlockPos@@1@Z",
@@ -33,7 +32,6 @@ THook(char, "?solidify@LiquidBlock@@IEBA_NAEAVBlockSource@@AEBVBlockPos@@1@Z",
 		string blockname = *(string*)((__int64)blockleg + 112);
 		if (blockname == "minecraft:cobblestone" ) {
 			int randVal = rand() % num;
-			cout << randVal << endl;
 			for (int i = 0; i < len; i++)
 			{
 				if (randVal < weight[i])

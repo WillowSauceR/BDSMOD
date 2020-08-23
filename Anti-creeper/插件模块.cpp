@@ -1,20 +1,24 @@
 #include "Ô¤±àÒëÍ·.h"
 #include "bdxcore.h"
 #include "BDSÄÚÈİ.hpp"
-#pragma comment(lib, "BDXCORE.lib")
+using namespace std;
 
 THook(bool,
 	"?explode@Level@@QEAAXAEAVBlockSource@@PEAVActor@@AEBVVec3@@M_N3M3@Z",
-	void* _this, void* a2, Actor* a3, const Vec3 a4, float a5, bool a6, bool a7, float a8, bool a9) {
-	__int64 id=a3->gettypeid();
-	if (id == 2849) {
-		std::cout << u8"ÒÑÀ¹½ØÎ»ÓÚ(" << a4.x << "," << a4.y << "," << a4.z << ")" << u8"µÄ±¬Õ¨ÆÆ»µ~" << std::endl;
-		return original(_this, a2, a3, a4, a5, a6, 0, a8, a9);
-	}
+	void* _this, BlockSource* bs, Actor* a3, const Vec3 pos, float a5, bool a6, bool a7) {
+	if (a6 != 0) { return original(_this, bs, a3, pos, a5, a6, a7); }
 	else {
-		return original(_this, a2, a3, a4, a5, a6, a7, a8, a9);
+		const int id = a3->gettypeid();
+		//cout << id << endl;
+		if (id == 2849) {
+			std::cout << u8"ÒÑÀ¹½ØÎ»ÓÚ(" << (int)pos.x << "," << (int)pos.y << "," << (int)pos.z << ")" << u8"µÄ±¬Õ¨ÆÆ»µ~" << std::endl;
+			return original(_this, bs, a3, pos, a5, a6, 0);
+		}
+		else {
+			return original(_this, bs, a3, pos, a5, a6, a7);
+		}
 	}
-};
+}
 void init() {
 	std::cout<<u8"[²å¼ş]·À¿àÁ¦ÅÂ²å¼şÒÑ×°ÔØ~"<<std::endl;
 }
