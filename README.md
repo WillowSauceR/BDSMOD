@@ -8,5 +8,5 @@
 # Folder creator
 此插件可以利用BDSjsrunner的logout函数创建文件夹
 logout('cf xxxxxx')
-#BDSpyrunner
+# BDSpyrunner
 见文件夹内介绍
