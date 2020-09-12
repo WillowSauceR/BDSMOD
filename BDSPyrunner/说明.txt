@@ -29,3 +29,6 @@ setListener(整数,函数名)
 3-玩家放置方块
 4-玩家破坏方块
 示例:mc.setListener(0,func)
+
+setTimeout(函数,整数)
+延时执行一个无参函数...单位毫秒
