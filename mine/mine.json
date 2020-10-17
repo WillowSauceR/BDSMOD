@@ -1,4 +1,10 @@
 {
-	"block": ["Cobblestone", "CoalOre", "IronOre", "GoldOre", "EmeraldOre", "RedStoneOre", "LapisOre", "DiamondOre"],
-	"weight": [150, 15, 10, 8, 5, 9, 9, 1]
+	"Cobblestone":150,
+	"CoalOre":15,
+	"IronOre":10,
+	"GoldOre":8,
+	"EmeraldOre":5,
+	"RedStoneOre":9,
+	"LapisOre":9,
+	"DiamondOre":1
 }
