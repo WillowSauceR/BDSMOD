@@ -1,31 +1,20 @@
 #pragma once
-//----------------------------------
-// 引用头文件
-//----------------------------------
 #define WIN32_LEAN_AND_MEAN
-// Windows 头文件
 #include <windows.h>
-// C++标准库 头文件
 #include <iostream>
 #include <string>
 #include <unordered_map>
 #include <map>
 #include <string>
 #include <string_view>
+using VA = unsigned long long;
+using RVA = unsigned int;
 extern "C" {
 	_declspec(dllimport) int HookFunction(void* oldfunc, void** poutold, void* newfunc);
 	_declspec(dllimport) void* GetServerSymbol(char const* name);
 }
-//----------------------------------
-// 基本类型定义
-//----------------------------------
-using VA = unsigned __int64;
-using RVA = unsigned int;
-template<typename Type>
-using Ptr = Type*;
-typedef unsigned long long CHash;
-constexpr CHash do_hash(std::string_view x) {
-	CHash rval = 0;
+constexpr VA do_hash(std::string_view x) {
+	VA rval = 0;
 	for (size_t i = 0; i < x.size(); ++i) {
 		rval *= 131;
 		rval += x[i];
@@ -33,9 +22,9 @@ constexpr CHash do_hash(std::string_view x) {
 	}
 	return rval;
 }
-constexpr CHash do_hash2(std::string_view x) {
+constexpr VA do_hash2(std::string_view x) {
 	//ap hash
-	CHash rval = 0;
+	VA rval = 0;
 	for (size_t i = 0; i < x.size(); ++i) {
 		if (i & 1) {
 			rval ^= (~((rval << 11) ^ x[i] ^ (rval >> 5)));
@@ -64,18 +53,11 @@ inline const T& dAccess(void const* ptr, uintptr_t off) {
 }
 #define __WEAK __declspec(selectany)
 
-#define SYM(x) GetServerSymbol(x)
-
-template<typename T_RET, typename... Args>
-T_RET Symcall(const char* fn, Args... args) {
-	using FnType = T_RET(*)(Args...);
-	FnType p = (FnType)SYM(fn);
-	return p(args...);
+template<typename ret, typename... Args>
+inline ret SYMCALL(const char* fn, Args... args) {
+	return ((ret(*)(Args...))GetServerSymbol(fn))(args...);
 }
-#define SYMCALL(ret, sym, ...) (Symcall<ret>(sym, ##__VA_ARGS__))
-//#define SymCall(ret,fn, ...) ((ret(*)(__VA_ARGS__))(SYM(fn)))
-class THookRegister {
-public:
+struct THookRegister {
 	THookRegister(void* address, void* hook, void** org) {
 		auto ret = HookFunction(address, org, hook);
 		if (ret != 0) {
@@ -111,9 +93,9 @@ public:
 		THookRegister(sym, hookUnion.b, org);
 	}
 };
-template <CHash, CHash>
+template <VA, VA>
 struct THookTemplate;
-template <CHash, CHash>
+template <VA, VA>
 extern THookRegister THookRegisterTemplate;
 
 #define _TInstanceHook(class_inh, pclass, iname, sym, ret, ...)                                             \
@@ -172,18 +154,3 @@ extern THookRegister THookRegisterTemplate;
 #define TClasslessInstanceHook(ret, sym, ...) TClasslessInstanceHook2(sym, ret, sym, __VA_ARGS__)
 #define TInstanceHook2(iname, ret, sym, type, ...) _TInstanceDefHook(iname, sym, ret, type, __VA_ARGS__)
 #define TInstanceHook(ret, sym, type, ...) TInstanceHook2(sym, ret, sym, type, __VA_ARGS__)
-
-//----------------------------------
-// 其他
-//----------------------------------
-#define REF(PTR)										(&PTR)
-#define DEREF(PTR)										(*PTR)
-#define OBJECT(TYPE, VALUE)								reinterpret_cast<TYPE>(VALUE)
-
-#define POINTER(PTR_TYPE, PTR)							OBJECT(PTR_TYPE, PTR)
-#define POINTER_ADD_OFFSET(TYPE, PTR, OFFSET)			POINTER(TYPE, POINTER(VA, PTR)+OFFSET)
-#define CLASS_OBJECT(TYPE, THISPTR, OFFSET)				DEREF(POINTER_ADD_OFFSET(Ptr<TYPE>, THISPTR, OFFSET))
-#define CLASS_VTABLE_OBJECT(TYPE, THISPTR, OFFSET)		DEREF(POINTER(Ptr<TYPE>, DEREF(POINTER(Ptr<VA>, THISPTR))+OFFSET))
-
-#define SYM_POINT(TYPE, SYM_RVA)						POINTER_ADD_OFFSET(Ptr<TYPE>, GetModuleHandle(NULL), SYM_RVA)
-#define SYM_OBJECT(TYPE, SYM_RVA)						DEREF(POINTER_ADD_OFFSET(Ptr<TYPE>, GetModuleHandle(NULL), SYM_RVA))

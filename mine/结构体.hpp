@@ -17,7 +17,7 @@ struct BlockLegacy {
 };
 struct Block {
 	BlockLegacy* getBlockLegacy() {
-		return SYMCALL(BlockLegacy*, "?getLegacyBlock@Block@@QEBAAEBVBlockLegacy@@XZ",
+		return SYMCALL<BlockLegacy*>( "?getLegacyBlock@Block@@QEBAAEBVBlockLegacy@@XZ",
 			this);
 	}
 };
@@ -26,7 +26,7 @@ struct BlockPos {
 };
 struct BlockSource {
 	Block* getBlock(BlockPos* bp) {
-		return SYMCALL(Block*, "?getBlock@BlockSource@@QEBAAEBVBlock@@AEBVBlockPos@@@Z",
+		return SYMCALL<Block*>("?getBlock@BlockSource@@QEBAAEBVBlock@@AEBVBlockPos@@@Z",
 			this, bp);
 	}
 };
