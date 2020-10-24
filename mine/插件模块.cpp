@@ -1,6 +1,6 @@
 #include "预编译头.h"
 #include "结构体.hpp"
-#include "JsonLoader.h"
+#include "json.h"
 #include <time.h>
 using std::string;
 
@@ -31,9 +31,9 @@ THook(char, "?solidify@LiquidBlock@@IEBA_NAEAVBlockSource@@AEBVBlockPos@@1@Z",
 }
 void init() {
 	srand((unsigned)time(0));
-	JsonReader r;
-	r.read("mine.json");
-	for (auto& e : r.dc.GetObjectW()) {
+	Json r;
+	r.ReadFile("mine.json");
+	for (auto& e : r.GetObjectW()) {
 		name[len] = e.name.GetString();
 		weight[len] = e.value.GetInt();
 		num += weight[len];

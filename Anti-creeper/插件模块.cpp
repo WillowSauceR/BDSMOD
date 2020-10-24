@@ -13,8 +13,3 @@ THook(bool, "?explode@Level@@QEAAXAEAVBlockSource@@PEAVActor@@AEBVVec3@@M_N3M3@Z
 void init() {
 	std::cout << u8"[插件]防苦力怕插件已装载~" << std::endl;
 }
-
-void exit() {
-	// 此处填写插件卸载时的操作
-}
-
