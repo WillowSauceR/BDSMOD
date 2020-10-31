@@ -2,7 +2,7 @@
 struct Vec3 {
 	float x, y, z;
 };
-THook(bool, "?explode@Level@@QEAAXAEAVBlockSource@@PEAVActor@@AEBVVec3@@M_N3M3@Z",
+SYMHOOK(explode, bool, "?explode@Level@@QEAAXAEAVBlockSource@@PEAVActor@@AEBVVec3@@M_N3M3@Z",
 	void* _this, void* bs, /*Actor*/void* a3, const Vec3 pos, float a5, bool a6, bool a7, float a8, bool a9) {
 	if (a6 == 0 && a5 == 3) {
 		if (SYMCALL<int>("?getEntityTypeId@Actor@@UEBA?AW4ActorType@@XZ", a3) == 2849)

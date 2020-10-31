@@ -10,7 +10,7 @@ static void logout(string str) {
 		STD_COUT_HANDLE, str.c_str(), str.length());
 }
 // ÷∏¡Ó ‰≥ˆ
-THook(VA, "??$_Insert_string@DU?$char_traits@D@std@@_K@std@@YAAEAV?$basic_ostream@DU?$char_traits@D@std@@@0@AEAV10@QEBD_K@Z",
+SYMHOOK(_logout,VA, "??$_Insert_string@DU?$char_traits@D@std@@_K@std@@YAAEAV?$basic_ostream@DU?$char_traits@D@std@@@0@AEAV10@QEBD_K@Z",
 	VA handle, char* str, VA size) {
 	if (handle == STD_COUT_HANDLE) {
 		if (*str == '*') {

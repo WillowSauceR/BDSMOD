@@ -10,17 +10,16 @@ string name[16];
 int num = 0;
 int len = 0;
 // ÒºÌåÁ÷¶¯
-THook(char, "?solidify@LiquidBlock@@IEBA_NAEAVBlockSource@@AEBVBlockPos@@1@Z",
+SYMHOOK(solidify, char, "?solidify@LiquidBlock@@IEBA_NAEAVBlockSource@@AEBVBlockPos@@1@Z",
 	void* _this, BlockSource* bs, BlockPos* bp1, BlockPos* bp2) {
 	char result = original(_this, bs, bp1, bp2);
 	if (result) {
-		short bid = bs->getBlock(bp1)->getBlockLegacy()->getBlockItemID();
-		if (bid == 4) {
+		if (bs->getBlock(bp1)->getBlockLegacy()->getBlockItemID() == 4) {
 			int randVal = rand() % num;
 			for (int i = 0; i < len; i++) {
 				if (randVal < weight[i]) {
-					((bool(*)(BlockSource*,BlockPos*,Block&,int,long long))GetServerSymbol("?setBlock@BlockSource@@QEAA_NAEBVBlockPos@@AEBVBlock@@HPEBUActorBlockSyncMessage@@@Z"))
-						(bs, bp1,**(Block**)GetServerSymbol(("?m" + name[i] + "@VanillaBlocks@@3PEBVBlock@@EB").c_str()), 3, 0i64);
+					((bool(*)(BlockSource*, BlockPos*, Block&, int, long long))GetServerSymbol("?setBlock@BlockSource@@QEAA_NAEBVBlockPos@@AEBVBlock@@HPEBUActorBlockSyncMessage@@@Z"))
+						(bs, bp1, **(Block**)GetServerSymbol(("?m" + name[i] + "@VanillaBlocks@@3PEBVBlock@@EB").c_str()), 3, 0i64);
 					break;
 				}
 				randVal -= weight[i];
