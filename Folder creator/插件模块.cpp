@@ -1,4 +1,4 @@
-#include "预编译头.h"
+#include "../预编译头.h"
 #include <filesystem>
 using std::string,std::cout,std::endl;
 using namespace std::filesystem;
@@ -24,4 +24,8 @@ SYMHOOK(_logout,VA, "??$_Insert_string@DU?$char_traits@D@std@@_K@std@@YAAEAV?$ba
 };
 void init() {
 	cout << u8"[插件]文件夹创建加载成功~" << endl;
+}
+int __stdcall DllMain(HINSTANCE__* hModule, unsigned long res, void* lpReserved) {
+	if (res == 1)init();
+	return 1;
 }

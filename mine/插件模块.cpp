@@ -1,4 +1,4 @@
-#include "预编译头.h"
+#include "../预编译头.h"
 #include "结构体.hpp"
 #include "json.h"
 #include <time.h>
@@ -41,4 +41,8 @@ void init() {
 	for (int i = 0; i < len; i++)
 		cout("[mine]" << name[i] << u8"生成概率为" << (double)weight[i] * 100 / (double)num << '%');
 	cout(u8"[插件]刷矿机加载完成~");
+}
+int __stdcall DllMain(HINSTANCE__* hModule, unsigned long res, void* lpReserved) {
+	if (res == 1)init();
+	return 1;
 }
