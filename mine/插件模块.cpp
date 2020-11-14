@@ -1,6 +1,8 @@
 #include "../预编译头.h"
 #include "结构体.hpp"
-#include "json.h"
+#define ARDUINOJSON_ENABLE_STD_STREAM 1
+#include "ArduinoJson.h"
+#include <fstream>
 #include <time.h>
 using std::string;
 
@@ -30,17 +32,24 @@ SYMHOOK(solidify, char, "?solidify@LiquidBlock@@IEBA_NAEAVBlockSource@@AEBVBlock
 }
 void init() {
 	srand((unsigned)time(0));
-	Json r;
-	r.ReadFile("mine.json");
-	for (auto& e : r.GetObjectW()) {
-		name[len] = e.name.GetString();
-		weight[len] = e.value.GetInt();
-		num += weight[len];
-		len++;
+	StaticJsonDocument<1024> r;
+	ifstream ifs("mine.json");
+	if (ifs.is_open()) {
+		if (deserializeJson(r, ifs)) { cout(u8"[mine] json格式错误!");}
+		for (auto e : r.as<JsonObject>()) {
+			name[len] = e.key().c_str();
+			weight[len] = e.value();
+			num += weight[len];
+			len++;
+		}
+		for (int i = 0; i < len; i++)
+			cout("[mine]" << name[i] << u8"生成概率为" << (double)weight[i] * 100 / (double)num << '%');
+		cout(u8"[mine]刷矿机加载完成~");
 	}
-	for (int i = 0; i < len; i++)
-		cout("[mine]" << name[i] << u8"生成概率为" << (double)weight[i] * 100 / (double)num << '%');
-	cout(u8"[插件]刷矿机加载完成~");
+	else {
+		cout(u8"[mine]bad file mine.json");
+	}
+	ifs.close();
 }
 int __stdcall DllMain(HINSTANCE__* hModule, unsigned long res, void* lpReserved) {
 	if (res == 1)init();
