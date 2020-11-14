@@ -5,14 +5,13 @@
 #include <fstream>
 #include <time.h>
 using std::string;
-
-#define cout(...) std::cout<<__VA_ARGS__<<std::endl
+#define out(...) std::cout<<__VA_ARGS__<<std::endl
 int weight[16];
 string name[16];
 int num = 0;
 int len = 0;
 // 液体流动
-SYMHOOK(solidify, char, "?solidify@LiquidBlock@@IEBA_NAEAVBlockSource@@AEBVBlockPos@@1@Z",
+THook(solidify, char, "?solidify@LiquidBlock@@IEBA_NAEAVBlockSource@@AEBVBlockPos@@1@Z",
 	void* _this, BlockSource* bs, BlockPos* bp1, BlockPos* bp2) {
 	char result = original(_this, bs, bp1, bp2);
 	if (result) {
@@ -35,7 +34,7 @@ void init() {
 	StaticJsonDocument<1024> r;
 	ifstream ifs("mine.json");
 	if (ifs.is_open()) {
-		if (deserializeJson(r, ifs)) { cout(u8"[mine] json格式错误!");}
+		if (deserializeJson(r, ifs)) { out(u8"[mine] json格式错误!"); }
 		for (auto e : r.as<JsonObject>()) {
 			name[len] = e.key().c_str();
 			weight[len] = e.value();
@@ -43,11 +42,11 @@ void init() {
 			len++;
 		}
 		for (int i = 0; i < len; i++)
-			cout("[mine]" << name[i] << u8"生成概率为" << (double)weight[i] * 100 / (double)num << '%');
-		cout(u8"[mine]刷矿机加载完成~");
+			out("[mine]" << name[i] << u8"生成概率为" << (double)weight[i] * 100 / (double)num << '%');
+		out(u8"[mine]刷矿机加载完成~");
 	}
 	else {
-		cout(u8"[mine]bad file mine.json");
+		out(u8"[mine]bad file mine.json");
 	}
 	ifs.close();
 }

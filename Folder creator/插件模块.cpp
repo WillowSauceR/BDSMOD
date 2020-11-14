@@ -1,16 +1,16 @@
 #include "../‘§±‡“ÎÕ∑.h"
 #include <filesystem>
-using std::string,std::cout,std::endl;
+using std::string, std::cout, std::endl;
 using namespace std::filesystem;
 static const VA STD_COUT_HANDLE = *(VA*)GetServerSymbol("__imp_?cout@std@@3V?$basic_ostream@DU?$char_traits@D@std@@@1@A");
 
 // √¸¡Ó ‰≥ˆ
 static void logout(string str) {
-	SYMCALL<VA>( "??$_Insert_string@DU?$char_traits@D@std@@_K@std@@YAAEAV?$basic_ostream@DU?$char_traits@D@std@@@0@AEAV10@QEBD_K@Z",
+	SYMCALL<VA>("??$_Insert_string@DU?$char_traits@D@std@@_K@std@@YAAEAV?$basic_ostream@DU?$char_traits@D@std@@@0@AEAV10@QEBD_K@Z",
 		STD_COUT_HANDLE, str.c_str(), str.length());
 }
 // ÷∏¡Ó ‰≥ˆ
-SYMHOOK(_logout,VA, "??$_Insert_string@DU?$char_traits@D@std@@_K@std@@YAAEAV?$basic_ostream@DU?$char_traits@D@std@@@0@AEAV10@QEBD_K@Z",
+THook(_logout, VA, "??$_Insert_string@DU?$char_traits@D@std@@_K@std@@YAAEAV?$basic_ostream@DU?$char_traits@D@std@@@0@AEAV10@QEBD_K@Z",
 	VA handle, char* str, VA size) {
 	if (handle == STD_COUT_HANDLE) {
 		if (*str == '*') {
