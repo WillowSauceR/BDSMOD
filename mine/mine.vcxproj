@@ -161,10 +161,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="结构体.hpp" />
+    <ClInclude Include="BDS.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="插件模块.cpp" />
+    <ClCompile Include="mod.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="..\chakra.lib" />

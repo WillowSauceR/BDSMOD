@@ -3,11 +3,11 @@ using namespace std;
 
 struct BlockLegacy {
 	string getBlockName() {
-		return *(string*)((__int64)this + 112);
+		return *(string*)(this + 128);
 	}
 	// ªÒ»°∑ΩøÈID∫≈
 	auto getBlockItemID() const {			// IDA VanillaItems::initCreativeItemsCallback Item::beginCreativeGroup "itemGroup.name.planks"
-		short v3 = *(short*)((VA)this + 268);
+		short v3 = *(short*)(this + 328);
 		if (v3 < 0x100) {
 			return v3;
 		}
@@ -17,8 +17,7 @@ struct BlockLegacy {
 };
 struct Block {
 	BlockLegacy* getBlockLegacy() {
-		return SYMCALL<BlockLegacy*>( "?getLegacyBlock@Block@@QEBAAEBVBlockLegacy@@XZ",
-			this);
+		return SYMCALL<BlockLegacy*>("?getLegacyBlock@Block@@QEBAAEBVBlockLegacy@@XZ", this);
 	}
 };
 struct BlockPos {
