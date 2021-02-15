@@ -4,8 +4,6 @@ VisualStudioVersion = 16.0.29503.13
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Anti-creeper", "Anti-creeper\Anti-creeper.vcxproj", "{AF01B71E-99C6-4B35-9AD8-2DF9227A730D}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Folder creator", "Folder creator\Folder creator.vcxproj", "{2E396D93-5EBA-402E-B3E7-457565986224}"
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "mine", "mine\mine.vcxproj", "{E8DB40A1-A0CD-4A2F-80CB-3976C616EF5B}"
 EndProject
 Global
@@ -24,14 +22,6 @@ Global
 		{AF01B71E-99C6-4B35-9AD8-2DF9227A730D}.Release|x64.Build.0 = Release|x64
 		{AF01B71E-99C6-4B35-9AD8-2DF9227A730D}.Release|x86.ActiveCfg = Release|Win32
 		{AF01B71E-99C6-4B35-9AD8-2DF9227A730D}.Release|x86.Build.0 = Release|Win32
-		{2E396D93-5EBA-402E-B3E7-457565986224}.Debug|x64.ActiveCfg = Debug|x64
-		{2E396D93-5EBA-402E-B3E7-457565986224}.Debug|x64.Build.0 = Debug|x64
-		{2E396D93-5EBA-402E-B3E7-457565986224}.Debug|x86.ActiveCfg = Debug|Win32
-		{2E396D93-5EBA-402E-B3E7-457565986224}.Debug|x86.Build.0 = Debug|Win32
-		{2E396D93-5EBA-402E-B3E7-457565986224}.Release|x64.ActiveCfg = Release|x64
-		{2E396D93-5EBA-402E-B3E7-457565986224}.Release|x64.Build.0 = Release|x64
-		{2E396D93-5EBA-402E-B3E7-457565986224}.Release|x86.ActiveCfg = Release|Win32
-		{2E396D93-5EBA-402E-B3E7-457565986224}.Release|x86.Build.0 = Release|Win32
 		{E8DB40A1-A0CD-4A2F-80CB-3976C616EF5B}.Debug|x64.ActiveCfg = Debug|x64
 		{E8DB40A1-A0CD-4A2F-80CB-3976C616EF5B}.Debug|x64.Build.0 = Debug|x64
 		{E8DB40A1-A0CD-4A2F-80CB-3976C616EF5B}.Debug|x86.ActiveCfg = Debug|Win32
