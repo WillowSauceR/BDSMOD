@@ -13,8 +13,8 @@ Hook(solidify, char, "?solidify@LiquidBlock@@IEBA_NAEAVBlockSource@@AEBVBlockPos
 			int randVal = rand() % num;
 			for (auto& p : blocks) {
 				if (randVal < p.second) {
-					((bool(*)(BlockSource*, BlockPos*, Block&, int, long long))GetServerSymbol("?setBlock@BlockSource@@QEAA_NAEBVBlockPos@@AEBVBlock@@HPEBUActorBlockSyncMessage@@@Z"))
-						(bs, bp1, **(Block**)GetServerSymbol(("?m" + p.first + "@VanillaBlocks@@3PEBVBlock@@EB").c_str()), 3, 0i64);
+					SYMCALL<bool>("?setBlock@BlockSource@@QEAA_NAEBVBlockPos@@AEBVBlock@@HPEBUActorBlockSyncMessage@@@Z",
+						bs, bp1, *(Block**)SYM(("?m" + p.first + "@VanillaBlocks@@3PEBVBlock@@EB").c_str()), 3, 0i64);
 					break;
 				}
 				randVal -= p.second;
@@ -39,9 +39,10 @@ BOOL WINAPI DllMain(HMODULE hModule, DWORD reason, LPVOID lpReserved) {
 				printf(u8"[mine] %s 生成概率为 %f %%\n", p.first.c_str(), (double)p.second * 100 / (double)num);
 		}
 		else {
-			puts(u8"[mine]bad file mine.json");
+			puts(u8"[mine]can't find file mine.json");
+			return 1;
 		}
 		ifs.close();
 	}
-	return TRUE;
+	return 1;
 }
