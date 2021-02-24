@@ -1,7 +1,7 @@
 #include "../pch.h"
+#include "Json.h"
 #include "BDS.hpp"
-#define ARDUINOJSON_ENABLE_STD_STREAM 1
-#include "ArduinoJson.h"
+#pragma warning(disable:4996)
 unordered_map<string, int> blocks;
 int num = 0;
 // 液体流动
@@ -26,14 +26,15 @@ Hook(solidify, char, "?solidify@LiquidBlock@@IEBA_NAEAVBlockSource@@AEBVBlockPos
 BOOL WINAPI DllMain(HMODULE hModule, DWORD reason, LPVOID lpReserved) {
 	if (reason == 1) {
 		srand((unsigned)time(0));
-		StaticJsonDocument<2048> r;
 		ifstream ifs("mine.json");
 		if (ifs.is_open()) {
-			if (deserializeJson(r, ifs))
-				puts(u8"[mine] json格式错误!");
-			for (auto e : r.as<JsonObject>()) {
-				blocks[e.key().c_str()] = e.value();
-				num += e.value().as<int>();
+			string str{ istreambuf_iterator<char>(ifs),istreambuf_iterator<char>() };
+			Json j;
+			if ((bool)j.fromString(str))
+				puts(u8"[mine]Json格式错误");
+			for (auto o : j.asObject()) {
+				blocks[o.first] = o.second.asInt();
+				num += o.second.asInt();
 			}
 			for (auto& p : blocks)
 				printf(u8"[mine] %s 生成概率为 %f %%\n", p.first.c_str(), (double)p.second * 100 / (double)num);
