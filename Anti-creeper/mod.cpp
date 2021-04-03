@@ -1,5 +1,4 @@
 #include "../pch.h"
-#include "mod.h"
 struct Vec3 {
 	float x, y, z;
 }pos;
